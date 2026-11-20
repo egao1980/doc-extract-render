@@ -1,9 +1,9 @@
 (defsystem "doc-extract-render"
-  :version "0.1.0"
+  :version "0.1.1"
   :description "Markdown and HTML render/parse for extracted-document (C3e)"
   :author "egao1980"
   :license "MIT"
-  :depends-on ("doc-extract-protocol" "html-protocol")
+  :depends-on ((:version "doc-extract-protocol" "0.3.0") "html-protocol")
   :properties (:cl-repo (:ci (:with ("html-backend-plump"))))
   :serial t
   :pathname "src"

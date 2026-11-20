@@ -57,6 +57,7 @@
          (round (doc-extract-render:parse-document stripped :markdown)))
     (ng (search "{#" stripped))
     (ok (search "close=section" stripped))
+    (ok (search "```lisp" stripped) "stripped markdown keeps the code language (#1)")
     (ok (doc-extract-protocol:document-equivalent-p doc round :level :structure))))
 
 (deftest strip-html-holds-structure
