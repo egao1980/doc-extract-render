@@ -110,18 +110,6 @@
          (search "-->" s)
          (not (search "close=section" s)))))
 
-(defun %strip-fence-language (line)
-  "```lisp → ``` so parse-markup will not touch an unbound language slot."
-  (let ((s (string-right-trim '(#\Space #\Tab #\Return) line)))
-    (cond
-      ((and (>= (length s) 3) (string= (subseq s 0 3) "```")
-            (> (length s) 3))
-       "```")
-      ((and (>= (length s) 4) (string= (subseq s 0 4) "~~~~")
-            (> (length s) 4))
-       "~~~~")
-      (t line))))
-
 (defun %strip-markdown-comments (text)
   (with-output-to-string (out)
     (let ((start 0)
@@ -130,12 +118,12 @@
             when (char= (char text i) #\Newline)
               do (let ((line (subseq text start i)))
                    (unless (%html-comment-line-p line)
-                     (write-string (%strip-fence-language line) out)
+                     (write-string line out)
                      (write-char #\Newline out))
                    (setf start (1+ i))))
       (let ((line (subseq text start)))
         (unless (%html-comment-line-p line)
-          (write-string (%strip-fence-language line) out))))))
+          (write-string line out))))))
 
 (defun strip-render-attributes (input &optional (format :html))
   "Drop demiurge metadata so a re-parse can only recover :structure.
